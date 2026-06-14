@@ -1,2 +1,2 @@
 # book_classification_pythonML
-Machine learning project predicting Goodreads books rating from a large books dataset using Python (Pandas, Scikit-learn)
+Machine learning project to predict Goodreads book ratings using a large book dataset, implemented in Python with Pandas and Scikit-learn.
