@@ -1,0 +1,29 @@
+# .gitignore
+# Book Rating Prediction ML Pipeline - ignore large binaries, data, environments
+
+# Model artifacts (all serialized files)
+models/*.joblib
+models/*.pkl
+models/*.cbm
+
+# Jupyter notebook checkpoints and outputs
+.ipynb_checkpoints/
+*.pyc
+__pycache__/
+
+# Conda environment (never commit env folder)
+.conda/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Streamlit secrets (if any)
+.streamlit/secrets.toml
+*.venv
+.venv/
+temp.md
