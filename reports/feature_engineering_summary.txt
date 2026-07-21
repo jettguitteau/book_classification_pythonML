@@ -1,1 +1,2 @@
 Selected features: num_pages, ratings_count, text_reviews_count, log_ratings_count, log_text_reviews_count, reviews_per_rating, publisher_te, primary_author_te
+Generated features (all): title_length, title_word_count, has_exclamation, publication_year, book_age, is_classic, log_ratings_count, log_text_reviews_count, reviews_per_rating, publisher_te, primary_author_te, language_code_te

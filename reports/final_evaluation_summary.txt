@@ -9,6 +9,6 @@ Baseline results:
 Advanced results:
    Train RMSE  Test RMSE  Train MAE  Test MAE  Train R²   Test R²         Model   CV RMSE                                                                            Best Params
 0    0.253577   0.285720   0.165362  0.178257  0.493796  0.228088  RandomForest  0.286355  {'n_estimators': 100, 'min_samples_split': 2, 'min_samples_leaf': 5, 'max_depth': 10}
-1    0.244481   0.286344   0.171649  0.179428  0.529460  0.224713       XGBoost  0.291192         {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.05}
+1    0.243585   0.288436   0.171263  0.179421  0.532903  0.213345       XGBoost  0.291192         {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.05}
 2    0.266588   0.284806   0.176334  0.181803  0.440517  0.233021      LightGBM  0.287713         {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.05}
 3    0.275251   0.281324   0.185174  0.182572  0.403566  0.251662      CatBoost  0.290445                                 {'learning_rate': 0.05, 'iterations': 100, 'depth': 4}
