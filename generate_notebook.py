@@ -102,213 +102,54 @@ plt.show()"""))
 # 4. Data cleaning
 cells.append(md("## 2. Data Cleaning"))
 cells.append(md("We need to: parse dates, standardise language codes, split authors, cap outliers, and drop rows with missing targets."))
-cells.append(code("""# Language code mapping (ISO 639-2)
-LANG_MAP = {
-    'en-US': 'eng', 'en-GB': 'eng', 'en': 'eng',
-    'fr': 'fre', 'fr-FR': 'fre',
-    'de': 'ger', 'de-DE': 'ger',
-    'es': 'spa', 'es-ES': 'spa',
-    'it': 'ita', 'it-IT': 'ita',
-    'pt': 'por', 'pt-BR': 'por', 'pt-PT': 'por',
-    'nl': 'dut', 'nl-NL': 'dut',
-    'ja': 'jpn', 'ja-JP': 'jpn',
-    'zh': 'chi', 'zh-CN': 'chi', 'zh-TW': 'chi',
-    'ru': 'rus', 'ru-RU': 'rus',
-    'ar': 'ara', 'ar-SA': 'ara',
-    'ko': 'kor', 'ko-KR': 'kor',
-    'pl': 'pol', 'pl-PL': 'pol',
-    'sv': 'swe', 'sv-SE': 'swe',
-    'tr': 'tur', 'tr-TR': 'tur',
-    'vi': 'vie', 'vi-VN': 'vie',
-    'no': 'nor', 'nb-NO': 'nor',
-    'fi': 'fin', 'fi-FI': 'fin',
-    'da': 'dan', 'da-DK': 'dan',
-    'el': 'gre', 'el-GR': 'gre',
-    'he': 'heb', 'he-IL': 'heb',
-    'hu': 'hun', 'hu-HU': 'hun',
-    'cs': 'cze', 'cs-CZ': 'cze',
-    'ro': 'rum', 'ro-RO': 'rum',
-    'uk': 'ukr', 'uk-UA': 'ukr',
-    'th': 'tha', 'th-TH': 'tha',
-    'id': 'ind', 'id-ID': 'ind',
-    'ms': 'may', 'ms-MY': 'may',
-    'tl': 'tgl', 'tl-PH': 'tgl',
-    'hr': 'hrv', 'hr-HR': 'hrv',
-    'sk': 'slo', 'sk-SK': 'slo',
-    'sl': 'slv', 'sl-SI': 'slv',
-    'et': 'est', 'et-EE': 'est',
-    'lv': 'lav', 'lv-LV': 'lav',
-    'lt': 'lit', 'lt-LT': 'lit',
-    'bg': 'bul', 'bg-BG': 'bul',
-    'sr': 'srp', 'sr-RS': 'srp',
-    'ca': 'cat', 'ca-ES': 'cat',
-    'af': 'afr', 'af-ZA': 'afr',
-    'bn': 'ben', 'bn-BD': 'ben',
-    'fa': 'per', 'fa-IR': 'per',
-    'hi': 'hin', 'hi-IN': 'hin',
-    'ur': 'urd', 'ur-PK': 'urd',
-    'ta': 'tam', 'ta-IN': 'tam',
-    'te': 'tel', 'te-IN': 'tel',
-    'mr': 'mar', 'mr-IN': 'mar',
-    'gu': 'guj', 'gu-IN': 'guj',
-    'ml': 'mal', 'ml-IN': 'mal',
-    'kn': 'kan', 'kn-IN': 'kan',
-    'pa': 'pan', 'pa-IN': 'pan',
-    'or': 'ori', 'or-IN': 'ori',
-    'as': 'asm', 'as-IN': 'asm',
-    'ne': 'nep', 'ne-NP': 'nep',
-    'si': 'sin', 'si-LK': 'sin',
-    'my': 'bur', 'my-MM': 'bur',
-    'km': 'khm', 'km-KH': 'khm',
-    'lo': 'lao', 'lo-LA': 'lao',
-    'mn': 'mon', 'mn-MN': 'mon',
-    'kk': 'kaz', 'kk-KZ': 'kaz',
-    'uz': 'uzb', 'uz-UZ': 'uzb',
-    'tk': 'tuk', 'tk-TM': 'tuk',
-    'az': 'aze', 'az-AZ': 'aze',
-    'ka': 'geo', 'ka-GE': 'geo',
-    'hy': 'arm', 'hy-AM': 'arm',
-    'am': 'amh', 'am-ET': 'amh',
-    'sw': 'swa', 'sw-KE': 'swa',
-    'zu': 'zul', 'zu-ZA': 'zul',
-    'xh': 'xho', 'xh-ZA': 'xho',
-    'st': 'sot', 'st-ZA': 'sot',
-    'tn': 'tsn', 'tn-ZA': 'tsn',
-    'ts': 'tso', 'ts-ZA': 'tso',
-    've': 'ven', 've-ZA': 'ven',
-    'nr': 'nbl', 'nr-ZA': 'nbl',
-    'ss': 'ssw', 'ss-ZA': 'ssw',
-    'ny': 'nya', 'ny-MW': 'nya',
-    'sn': 'sna', 'sn-ZW': 'sna',
-    'mg': 'mlg', 'mg-MG': 'mlg',
-    'rw': 'kin', 'rw-RW': 'kin',
-    'rn': 'run', 'rn-BI': 'run',
-    'sg': 'sag', 'sg-CF': 'sag',
-    'ln': 'lin', 'ln-CD': 'lin',
-    'lg': 'lug', 'lg-UG': 'lug',
-    'wo': 'wol', 'wo-SN': 'wol',
-    'bm': 'bam', 'bm-ML': 'bam',
-    'ff': 'ful', 'ff-SN': 'ful',
-    'ha': 'hau', 'ha-NG': 'hau',
-    'yo': 'yor', 'yo-NG': 'yor',
-    'ig': 'ibo', 'ig-NG': 'ibo',
-    'om': 'orm', 'om-ET': 'orm',
-    'ti': 'tir', 'ti-ET': 'tir',
-    'so': 'som', 'so-SO': 'som',
-    'aa': 'aar', 'aa-ET': 'aar',
-    'ab': 'abk', 'ab-GE': 'abk',
-    'av': 'ava', 'av-RU': 'ava',
-    'ae': 'ave', 'ae': 'ave',
-    'ak': 'aka', 'ak-GH': 'aka',
-    'an': 'arg', 'an-ES': 'arg',
-    'ay': 'aym', 'ay-BO': 'aym',
-    'ba': 'bak', 'ba-RU': 'bak',
-    'be': 'bel', 'be-BY': 'bel',
-    'bh': 'bih', 'bh-IN': 'bih',
-    'bi': 'bis', 'bi-VU': 'bis',
-    'br': 'bre', 'br-FR': 'bre',
-    'ch': 'cha', 'ch-GU': 'cha',
-    'co': 'cos', 'co-FR': 'cos',
-    'cr': 'cre', 'cr-CA': 'cre',
-    'cu': 'chu', 'cu-RU': 'chu',
-    'cv': 'chv', 'cv-RU': 'chv',
-    'cy': 'wel', 'cy-GB': 'wel',
-    'dz': 'dzo', 'dz-BT': 'dzo',
-    'ee': 'ewe', 'ee-GH': 'ewe',
-    'eo': 'epo', 'eo': 'epo',
-    'fj': 'fij', 'fj-FJ': 'fij',
-    'fo': 'fao', 'fo-FO': 'fao',
-    'fy': 'fry', 'fy-NL': 'fry',
-    'ga': 'gle', 'ga-IE': 'gle',
-    'gd': 'gla', 'gd-GB': 'gla',
-    'gl': 'glg', 'gl-ES': 'glg',
-    'gn': 'grn', 'gn-PY': 'grn',
-    'gv': 'glv', 'gv-IM': 'glv',
-    'ho': 'hmo', 'ho-PG': 'hmo',
-    'ht': 'hat', 'ht-HT': 'hat',
-    'hz': 'her', 'hz-NA': 'her',
-    'ia': 'ina', 'ia': 'ina',
-    'ie': 'ile', 'ie': 'ile',
-    'ik': 'ipk', 'ik-US': 'ipk',
-    'io': 'ido', 'io': 'ido',
-    'iu': 'iku', 'iu-CA': 'iku',
-    'jv': 'jav', 'jv-ID': 'jav',
-    'kg': 'kon', 'kg-CD': 'kon',
-    'ki': 'kik', 'ki-KE': 'kik',
-    'kj': 'kua', 'kj-NA': 'kua',
-    'kl': 'kal', 'kl-GL': 'kal',
-    'kr': 'kau', 'kr-NG': 'kau',
-    'ks': 'kas', 'ks-IN': 'kas',
-    'kv': 'kom', 'kv-RU': 'kom',
-    'kw': 'cor', 'kw-GB': 'cor',
-    'ky': 'kir', 'ky-KG': 'kir',
-    'lb': 'ltz', 'lb-LU': 'ltz',
-    'li': 'lim', 'li-NL': 'lim',
-    'lu': 'lub', 'lu-CD': 'lub',
-    'mh': 'mah', 'mh-MH': 'mah',
-    'mi': 'mri', 'mi-NZ': 'mri',
-    'mt': 'mlt', 'mt-MT': 'mlt',
-    'na': 'nau', 'na-NR': 'nau',
-    'nb': 'nob', 'nb-NO': 'nob',
-    'nd': 'nde', 'nd-ZW': 'nde',
-    'ng': 'ndo', 'ng-NA': 'ndo',
-    'nl': 'nld', 'nl-NL': 'nld',
-    'nn': 'nno', 'nn-NO': 'nno',
-    'nv': 'nav', 'nv-US': 'nav',
-    'oc': 'oci', 'oc-FR': 'oci',
-    'oj': 'oji', 'oj-CA': 'oji',
-    'os': 'oss', 'os-RU': 'oss',
-    'pi': 'pli', 'pi': 'pli',
-    'ps': 'pus', 'ps-AF': 'pus',
-    'qu': 'que', 'qu-PE': 'que',
-    'rm': 'roh', 'rm-CH': 'roh',
-    'ro': 'ron', 'ro-RO': 'ron',
-    'sa': 'san', 'sa-IN': 'san',
-    'sc': 'srd', 'sc-IT': 'srd',
-    'sd': 'snd', 'sd-PK': 'snd',
-    'se': 'sme', 'se-NO': 'sme',
-    'sm': 'smo', 'sm-WS': 'smo',
-    'sq': 'sqi', 'sq-AL': 'sqi',
-    'su': 'sun', 'su-ID': 'sun',
-    'tg': 'tgk', 'tg-TJ': 'tgk',
-    'to': 'ton', 'to-TO': 'ton',
-    'tt': 'tat', 'tt-RU': 'tat',
-    'tw': 'twi', 'tw-GH': 'twi',
-    'ty': 'tah', 'ty-PF': 'tah',
-    'ug': 'uig', 'ug-CN': 'uig',
-    'vo': 'vol', 'vo': 'vol',
-    'wa': 'wln', 'wa-BE': 'wln',
-    'yi': 'yid', 'yi': 'yid',
-    'za': 'zha', 'za-CN': 'zha',
-    'zh': 'zho', 'zh-CN': 'zho',
-    'zu': 'zul', 'zu-ZA': 'zul',
-}
-print("Language map defined.")"""))
 
 cells.append(code("""def clean_dataframe(df):
     \"\"\"Apply all cleaning steps to the raw dataframe.\"\"\"
     initial_rows = len(df)
-    # 1. Parse publication_date
+        # 1. Parse publication_date
     df['publication_date_parsed'] = pd.to_datetime(df['publication_date'], errors='coerce')
     df = df.dropna(subset=['publication_date_parsed']).copy()
-    # 2. Standardise language codes
-    df['language_code'] = df['language_code'].map(LANG_MAP).fillna(df['language_code'])
+
+    # 2. Standardize language codes
+    df["language_code"] = (df["language_code"].str.lower().replace({
+        "en-us": "eng",
+        "en-gb": "eng",
+        "en-ca": "eng"}))
+    top_langs = ["eng", "spa", "fre", "ger", "jpn"]
+    df["language_code"] = df["language_code"].apply(
+    lambda x: x if x in top_langs else "other")
+
     # 3. Split authors
     df['author_count'] = df['authors'].apply(lambda x: len(str(x).split('/')))
     df['primary_author'] = df['authors'].apply(lambda x: str(x).split('/')[0].strip() if pd.notna(x) else '')
+
     # 4. Drop rows with missing target
-    df = df.dropna(subset=['average_rating']).copy()
-    # 5. Cap num_pages at 99th percentile
+    df.loc[df["average_rating"] == 0, "average_rating"] = np.nan
+    df = df.dropna(subset=["average_rating"])
+
+    # 5. Drop rows with ratings but no ratings_count.
+    df = df[~((df["average_rating"] > 0) &
+        (df["ratings_count"] == 0))]
+    
+    # 6. Enforce num_pages lies within the 1st and 99th percentile.
     cap_value = df['num_pages'].quantile(0.99)
-    df['num_pages'] = df['num_pages'].clip(upper=cap_value)
-    # 6. Replace old publication_date with parsed datetime
+    floor_value = df['num_pages'].quantile(0.01)
+    df['num_pages'] = df['num_pages'].clip(lower=floor_value, upper=cap_value)
+    
+    # 7. Removing duplicates based on title and authors, keeping the one with the highest ratings_count.
+    df[df.duplicated(subset=["title", "authors"], keep=False)].sort_values(["title", "authors"])
+    df = (df.sort_values("ratings_count", ascending=False).drop_duplicates(subset=["title", "authors"], keep="first"))
+   
+    # 8. Replace old publication_date with parsed datetime
     df['publication_date'] = df['publication_date_parsed']
     df.drop('publication_date_parsed', axis=1, inplace=True, errors='ignore')
     df.drop('authors_clean', axis=1, inplace=True, errors='ignore')
+
+
     summary = {
         'initial_rows': initial_rows,
         'final_rows': len(df),
-        'failed_dates': initial_rows - len(df),
+        'rows_removed': initial_rows - len(df),
         'cap_value': cap_value
     }
     return df, summary
@@ -316,7 +157,7 @@ cells.append(code("""def clean_dataframe(df):
 # Apply cleaning
 df_clean, clean_summary = clean_dataframe(df)
 print(f"Cleaned dataset: {df_clean.shape}")
-print(f"Dropped {clean_summary['failed_dates']} rows due to unparseable dates.")
+print(f"Dropped {clean_summary['rows_removed']} rows from original dataset, including those with unparseable dates, missing values, and duplicates.")
 df_clean.head()"""))
 
 # 5. Feature engineering
@@ -679,8 +520,7 @@ cells.append(code("""# Write summary files
 with open('reports/data_quality_summary.txt', 'w') as f:
     f.write(f"Initial rows: {clean_summary['initial_rows']}\\n")
     f.write(f"Final rows after cleaning: {clean_summary['final_rows']}\\n")
-    f.write(f"Rows dropped (unparseable dates): {clean_summary['failed_dates']}\\n")
-    f.write(f"num_pages capped at 99th percentile: {clean_summary['cap_value']:.1f}\\n")
+    f.write(f"Rows dropped: {clean_summary['rows_removed']}\\n")
 
 with open('reports/feature_engineering_summary.txt', 'w') as f:
     f.write(f"Selected features: {', '.join(selected)}\\n")

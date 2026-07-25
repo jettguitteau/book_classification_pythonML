@@ -1,6 +1,6 @@
 # Book Rating Prediction ML Pipeline (Simplified Branch)
 
-**Predict the average rating of a book (0‑5) using its metadata – all with a single double‑click. No programming knowledge required!**
+**Predict the average rating of a book (1‑5) using its metadata – all with a single double‑click. No programming knowledge required!**
 
 ---
 
@@ -91,16 +91,14 @@ The pipeline automatically picks the best model. Here are the final numbers (fro
 
 | Model               | CV RMSE | Test RMSE | Test R² |
 |---------------------|---------|-----------|---------|
-| Dummy Regressor     | 0.3502  | 0.3253    | 0.0000  |
-| Linear Regression   | 0.3034  | 0.2888    | 0.2114  |
-| Ridge               | 0.3034  | 0.2887    | 0.2119  |
-| Random Forest       | 0.2864  | 0.2857    | 0.2281  |
-| LightGBM            | 0.2877  | 0.2848    | 0.2330  |
-| CatBoost            | 0.2904  | 0.2813    | 0.2517  |
-| XGBoost             | 0.2905  | 0.2853    | 0.2303  |
-| **Final Model (CatBoost)** | 0.2904  | **0.2813** | **0.2517** |
-
-*Note: The ensemble (RF+LGBM) had a test RMSE of 0.2841, but CatBoost was automatically chosen because it performed slightly better on the hold‑out set.*
+| Dummy Regressor     | 0.2920  | 0.2974    | 0.0000  |
+| Linear Regression   | 0.3220  | 0.2481    | 0.3040  |
+| Ridge               | 0.3232  | 0.2481    | 0.3039  |
+| Random Forest       | 0.2412  | 0.2461    | 0.3152  |
+| LightGBM            | 0.2409  | 0.2446    | 0.3236  |
+| CatBoost            | 0.2400  | 0.2450    | 0.3210  |
+| XGBoost             | 0.2411  | 0.2436    | 0.3292  |
+| **Final Model (XGBoost)** | 0.2411  | **0.2436** | **0.3292** |
 
 ---
 
@@ -119,4 +117,4 @@ https://youtu.be/_5-2cYjAbDw
 
 ## License
 
-This project is for academic purposes. Developed by Nahasat Nibir.
+This project is for academic purposes. Developed by Nahasat Nibir, Jett Guitteau, Sébastien Martel, & Sunny Mondal.
