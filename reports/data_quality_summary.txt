@@ -1,0 +1,4 @@
+Initial rows: 11119
+Final rows after cleaning: 10729
+Rows dropped: 390
+num_pages capped at 99th percentile: 1178.6
