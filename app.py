@@ -209,7 +209,7 @@ if mode == "Single Book":
                 st.error("Please fill all required fields marked with *.")
             else:
                 input_data = pd.DataFrame([{
-                    "bookID": 0, "title": title, "authors": authors, "average_rating": 1.0, # 1.0 for average raing is a placeholder value so inference isn't removed by training-time cleaning.
+                    "bookID": 0, "title": title, "authors": authors, "average_rating": 1.0, # 1.0 for average rating is a placeholder value so inference isn't removed by training-time cleaning.
                     "isbn": "", "isbn13": "", "language_code": language_code,
                     "num_pages": num_pages, "ratings_count": ratings_count,
                     "text_reviews_count": text_reviews_count,
@@ -233,7 +233,7 @@ if mode == "Single Book":
 else:
     st.markdown("### Upload a CSV File")
     st.markdown("Required columns:")
-    expected = ["bookID","title","authors","average_rating","isbn","isbn13",
+    expected = ["title","authors","isbn","isbn13",
                 "language_code","num_pages","ratings_count","text_reviews_count",
                 "publication_date","publisher"]
     st.code(", ".join(expected))
@@ -242,6 +242,7 @@ else:
         try:
             df_up = pd.read_csv(uploaded)
             df_up.columns = df_up.columns.str.strip()
+            df_up['average_rating'] = 1.0
             missing = [c for c in expected if c not in df_up.columns]
             if missing:
                 st.error(f"Missing columns: {', '.join(missing)}")
@@ -249,6 +250,7 @@ else:
                 if st.button("Predict Ratings"):
                     with st.spinner("Predicting..."):
                         preds = pipeline.predict(df_up)
+                        df_up.drop(columns=['average_rating'], inplace=True, errors='ignore')
                         df_up['predicted_rating'] = preds.round(2)
                         st.dataframe(df_up)
                         csv = df_up.to_csv(index=False)
