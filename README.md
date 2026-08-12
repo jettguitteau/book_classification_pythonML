@@ -52,8 +52,9 @@ Instead of the automatic script, you can explore every detail of the pipeline in
 | `notebooks/complete_pipeline.ipynb` | A Jupyter notebook that walks you through every step of the pipeline interactively. Perfect for learning and assignments. |
 | `requirements.txt` | List of Python packages needed. They are installed automatically by the setup script. |
 | `data/books.csv` | **You must place the raw dataset here.** For simplicity, it has been included in the repository. |
+| `data/test_batch.csv` | An example csv containing books not used for training. It can be used to test the webapp in csv mode. |
 | `models/` | After training, this folder will contain the serialised model (`best_pipeline.joblib`) and feature names. |
-| `reports/` | After training, this folder will contain all evaluation reports (CSV and TXT) and plots (PNG). |
+| `reports/` | After training, this folder will contain all evaluation reports (CSV and TXT) and plots (PNG). main.tex uses them at the time of pdf report generation (done with prism). |
 
 ---
 
@@ -76,7 +77,7 @@ After running `run_training.py` (or the notebook), you’ll find these files in 
 
 Once the app is running (usually at http://localhost:8501), you have two choices:
 
-- **Single Book** – Fill in the title, authors, page count, ratings, etc., and click **Predict Rating**. You’ll see a styled card with the predicted rating (e.g., 4.05 / 5).
+- **Single Book** – Fill in the title, authors, page count, ratings count, etc., and click **Predict Rating**. You’ll see a styled card with the predicted rating (e.g., 4.05 / 5).
 - **Upload CSV** – Upload a CSV file with the same columns as the original dataset (you can use the included `data/test_batch.csv` as a template). The app will predict ratings for all rows and let you download the results.
 
 ![App Screenshot](Resources/streamlit_screenshot.PNG)
