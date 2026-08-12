@@ -19,7 +19,7 @@
 
 That’s it! You can now use the app to predict ratings for any book.
 
-5. Once you have all the training and necessary files, on next time usage you can simply run the app by executing `streamlit run app.py` from the project folder.
+5. Once you have all the training and necessary files, on next time usage you can simply run the app by executing `.venv\Scripts\activate` then `streamlit run app.py` from the project folder.
 
 ---
 
@@ -69,8 +69,6 @@ After running `run_training.py` (or the notebook), you’ll find these files in 
 | `advanced_model_comparison.csv` / `advanced_summary.txt` | Performance of the tuned advanced models (Random Forest, XGBoost, LightGBM, CatBoost) with their best hyperparameters. |
 | `final_evaluation_summary.txt` | Which model was chosen as the best, and a full comparison of all models. |
 | `report_latex/figures/` | Many PNG images showing residual plots, feature importance, SHAP explanations, and error analysis for each model. |
-
-These are exactly the same reports you would get from the original modular project.
 
 ---
 
