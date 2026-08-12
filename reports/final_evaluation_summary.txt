@@ -1,14 +1,14 @@
-Final model: XGBoost
-Ensemble Test RMSE: 0.2444, R²: 0.3245
+Final model: LightGBM
+Ensemble Test RMSE: 0.2435, R²: 0.3296
 Baseline results:
    Train RMSE  Test RMSE  Train MAE  Test MAE  Train R²   Test R²   Model  CV RMSE Mean
-0    0.295632   0.297398   0.223527  0.228107  0.000000 -0.000186   Dummy      0.291972
-1    0.245471   0.248094   0.177227  0.182103  0.310559  0.303956  Linear      0.322015
-2    0.245471   0.248096   0.177224  0.182103  0.310559  0.303943   Ridge      0.323161
-3    0.295632   0.297398   0.223527  0.228107  0.000000 -0.000186   Lasso      0.291972
+0    0.295632   0.297398   0.223527  0.228107   0.00000 -0.000186   Dummy      0.291972
+1    0.245289   0.248484   0.177140  0.182508   0.31158  0.301765  Linear      0.239451
+2    0.245289   0.248486   0.177137  0.182510   0.31158  0.301752   Ridge      0.239451
+3    0.295632   0.297398   0.223527  0.228107   0.00000 -0.000186   Lasso      0.291972
 Advanced results:
    Train RMSE  Test RMSE  Train MAE  Test MAE  Train R²   Test R²         Model   CV RMSE                                                                            Best Params
-0    0.185361   0.246079   0.128399  0.176977  0.606872  0.315214  RandomForest  0.241168  {'n_estimators': 300, 'min_samples_split': 5, 'min_samples_leaf': 5, 'max_depth': 15}
-1    0.220353   0.243558   0.159308  0.178226  0.444434  0.329173       XGBoost  0.241096         {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.05}
-2    0.218165   0.244561   0.156669  0.178346  0.455414  0.323639      LightGBM  0.240932         {'subsample': 1.0, 'n_estimators': 100, 'max_depth': 7, 'learning_rate': 0.05}
-3    0.210101   0.245046   0.153334  0.177874  0.494929  0.320954      CatBoost  0.240021                                 {'learning_rate': 0.1, 'iterations': 100, 'depth': 10}
+0    0.182709   0.245189   0.126162  0.176115  0.618042  0.320159  RandomForest  0.240210  {'n_estimators': 300, 'min_samples_split': 5, 'min_samples_leaf': 5, 'max_depth': 15}
+1    0.218115   0.244741   0.158341  0.178007  0.455666  0.322643       XGBoost  0.240538         {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.05}
+2    0.215282   0.243361   0.155139  0.176873  0.469711  0.330262      LightGBM  0.240012         {'subsample': 1.0, 'n_estimators': 100, 'max_depth': 7, 'learning_rate': 0.05}
+3    0.205605   0.244955   0.150351  0.177960  0.516314  0.321456      CatBoost  0.239200                                {'learning_rate': 0.05, 'iterations': 200, 'depth': 10}

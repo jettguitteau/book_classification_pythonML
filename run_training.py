@@ -107,6 +107,7 @@ def add_numeric_transforms(df):
     df['log_ratings_count'] = np.log1p(df['ratings_count'])
     df['log_text_reviews_count'] = np.log1p(df['text_reviews_count'])
     df['reviews_per_rating'] = df['text_reviews_count'] / (df['ratings_count'] + 1)
+    df.drop(columns=['ratings_count','text_reviews_count'], inplace=True, errors='ignore')
     return df
 
 def group_rare_categories(df, column, threshold=5, other_name='Other'):
