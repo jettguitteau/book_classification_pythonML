@@ -70,7 +70,7 @@ Identifiers (\texttt{bookID}, \texttt{isbn}, \texttt{isbn13}) and raw text (\tex
 
 \subsection{Feature Selection}
 Mutual information regression and Recursive Feature Elimination (RFE) with a Ridge estimator were used to select the most predictive features. The final set of 8 features was:
-\texttt{num\_pages, ratings\_count, text\_reviews\_count, log\_ratings\_count, log\_text\_reviews\_count, \\ reviews\_per\_rating, publisher\_te, primary\_author\_te}.
+\texttt{num\_pages, log\_ratings\_count, log\_text\_reviews\_count, \\ title\_length, publication\_year, publisher\_te, primary\_author\_te}.
 
 \subsection{Model Selection and Comparison}
 We trained and compared:
