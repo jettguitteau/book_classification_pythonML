@@ -147,7 +147,7 @@ Figure~\ref{fig:error_band} shows that the model performs best on books rated 4â
 A Streamlit web application was built to serve the final model. The user interface offers two modes:
 \begin{itemize}
     \item \textbf{Single Book}: a form with all required fields (title, authors, pages, ratings count, etc.). After submission, the predicted rating is displayed on a styled card.
-    \item \textbf{Batch CSV Upload}: users upload a CSV file with the same columns as the original dataset. The app validates the schema, runs predictions on all rows, and provides a downloadable CSV with an additional \texttt{predicted\_rating} column.
+    \item \textbf{Batch CSV Upload}: users upload a CSV file with columns similar to the original dataset. The app validates the schema, runs predictions on all rows, and provides a downloadable CSV with an additional \texttt{predicted\_rating} column.
 \end{itemize}
 The app loads the full preprocessing + model pipeline from a single serialised file \\ (\texttt{best\_pipeline.joblib}), ensuring exact reproduction of the trainingâ€‘time transformations. The architecture is summarised in Figure~\ref{fig:arch}.
 
