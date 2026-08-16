@@ -95,14 +95,14 @@ Table~\ref{tab:model_comparison} summarises the performance of all models.
 \toprule
 \textbf{Model} & \textbf{CV RMSE} & \textbf{Test RMSE} & \textbf{Test R\textsuperscript{2}} \\
 \midrule
-Dummy Regressor   & 0.2920 & 0.2974 & 0.0000 \\
-Linear Regression & 0.3220 & 0.2481 & 0.3040 \\
-Ridge             & 0.3232 & 0.2481 & 0.3039 \\
-Lasso             & 0.2920 & 0.2974 & 0.0000 \\
-Random Forest     & 0.2412 & 0.2461 & 0.3152 \\
-LightGBM          & 0.2409 & 0.2446 & 0.3236 \\
-CatBoost          & 0.2400 & 0.2450 & 0.3210 \\
-\textbf{XGBoost}           & 0.2411 & \textbf{0.2436} & \textbf{0.3292} \\
+Dummy Regressor   & 0.2920 & 0.2974 & -0.0002 \\
+Linear Regression & 0.2395 & 0.2485 & 0.3018 \\
+Ridge             & 0.2395 & 0.2485 & 0.3018 \\
+Lasso             & 0.2920 & 0.2974 & -0.0002 \\
+Random Forest     & 0.2402 & 0.2461 & 0.3152 \\
+LightGBM          & 0.2400 & 0.2446 & 0.3236 \\
+CatBoost          & 0.2392 & 0.2450 & 0.3210 \\
+\textbf{XGBoost}           & 0.2405 & \textbf{0.2436} & \textbf{0.3292} \\
 Ensemble (RF+LGBM) & – & 0.2444 & 0.3245 \\
 \bottomrule
 \end{tabular}
