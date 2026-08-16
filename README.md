@@ -78,7 +78,7 @@ After running `run_training.py` (or the notebook), you’ll find these files in 
 Once the app is running (usually at http://localhost:8501), you have two choices:
 
 - **Single Book** – Fill in the title, authors, page count, ratings count, etc., and click **Predict Rating**. You’ll see a styled card with the predicted rating (e.g., 4.05 / 5).
-- **Upload CSV** – Upload a CSV file with the same columns as the original dataset (you can use the included `data/test_batch.csv` as a template). The app will predict ratings for all rows and let you download the results.
+- **Upload CSV** – Upload a CSV file with columns similar to the original dataset (you can use the included `data/test_batch.csv` as a template). The app will predict ratings for all rows and let you download the results.
 
 ![App Screenshot](Resources/streamlit_screenshot.PNG)
 
@@ -90,14 +90,15 @@ The pipeline automatically picks the best model. Here are the final numbers (fro
 
 | Model               | CV RMSE | Test RMSE | Test R² |
 |---------------------|---------|-----------|---------|
-| Dummy Regressor     | 0.2920  | 0.2974    | 0.0000  |
-| Linear Regression   | 0.3220  | 0.2481    | 0.3040  |
-| Ridge               | 0.3232  | 0.2481    | 0.3039  |
-| Random Forest       | 0.2412  | 0.2461    | 0.3152  |
-| LightGBM            | 0.2409  | 0.2446    | 0.3236  |
-| CatBoost            | 0.2400  | 0.2450    | 0.3210  |
-| XGBoost             | 0.2411  | 0.2436    | 0.3292  |
-| **Final Model (XGBoost)** | 0.2411  | **0.2436** | **0.3292** |
+| Dummy Regressor     | 0.2918  | 0.2974    | 0.0000 |
+| Linear Regression   | 0.2395  | 0.2485    | 0.3018  |
+| Ridge               | 0.2395  | 0.2485    | 0.3018  |
+| Lasso               | 0.2920  | 0.2974    | 0.0000  |
+| Random Forest       | 0.2402  | 0.2452    | 0.3202  |
+| LightGBM            | 0.2400  | 0.2434    | 0.3303  |
+| CatBoost            | 0.2392  | 0.2450    | 0.3215  |
+| XGBoost             | 0.2405  | 0.2447    | 0.3226  |
+| **Final Model (LightGBM)** | 0.2400  | **0.2434** | **0.3303** |
 
 ---
 
